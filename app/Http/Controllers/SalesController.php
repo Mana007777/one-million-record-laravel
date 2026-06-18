@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class SalesController extends Controller
 {
+
+    public function index()
+    {
+        return view('upload-file');
+    }
     public function store(Request $request)
     {
         $file = $request->file('file');
