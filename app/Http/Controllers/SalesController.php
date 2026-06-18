@@ -15,14 +15,15 @@ class SalesController extends Controller
     public function store(Request $request)
     {
         if(request()->has('file')){
-            $data = array_map('str_getcsv', file($request->file));
+            // $data = array_map('str_getcsv', file($request->file));
+            $data = file($request->file);
             $header = $data[0];
             unset($data[0]);
 
             $chunks = array_chunk($data, 1000);
 
             foreach ($chunks as $key => $chunk){
-                $name = "tmp${$key}.csv";
+                $name = "/tmp{$key}.csv";
                 $path = resource_path("temp");
                 file_put_contents("$path . $name",$chunk);
             }
