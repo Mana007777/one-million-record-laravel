@@ -9,4 +9,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SalesController::class , 'index']);
 
-Route::post('/upload', [SalesController::class, 'store']);
+Route::post('/upload', [SalesController::class, 'upload']);
+Route::post('/store-data', [SalesController::class, 'store']);

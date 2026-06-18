@@ -12,28 +12,48 @@ class SalesController extends Controller
     {
         return view('upload-file');
     }
-    public function store(Request $request)
+    public function upload(Request $request)
     {
-        if(request()->has('file')){
+        if (request()->has('file')) {
             // $data = array_map('str_getcsv', file($request->file));
             $data = file($request->file);
-            $header = $data[0];
-            unset($data[0]);
+            // $header = $data[0];
+            // unset($data[0]);
 
             $chunks = array_chunk($data, 1000);
 
-            foreach ($chunks as $key => $chunk){
+            foreach ($chunks as $key => $chunk) {
                 $name = "/tmp{$key}.csv";
                 $path = resource_path("temp");
-                file_put_contents("$path . $name",$chunk);
+                file_put_contents("$path . $name", $chunk);
             }
 
+            // foreach ($data as $item) {
+            //     $saleData = array_combine($header, $item);
+            //     Sales::create($saleData);
+            // }
+            return 'File uploaded successfully';
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $path = resource_path("temp");
+        $files = glob("$path/*.csv");
+        $header = [];
+        foreach ($files as $key =>  $file) {
+            $data = array_map('str_getcsv', file($file));
+            if($key == 0){
+                $header = $data[0];
+                unset($data[0]);
+            }
             foreach ($data as $item) {
                 $saleData = array_combine($header, $item);
                 Sales::create($saleData);
-              
             }
-            return 'File uploaded successfully';
+            unlink($file); 
         }
+        return 'Data stored successfully';
+
     }
 }
