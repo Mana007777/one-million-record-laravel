@@ -22,7 +22,7 @@ return new class extends Migration
             $table->bigInteger('Order ID');
             $table->date('Ship Date');
             $table->integer('Units Sold');
-            $table->decimal('Unit Price', 10, 2);`
+            $table->decimal('Unit Price', 10, 2);
             $table->decimal('Unit Cost', 10, 2);
             $table->decimal('Total Revenue', 15, 2);
             $table->decimal('Total Cost', 15, 2);
